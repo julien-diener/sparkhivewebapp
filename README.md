@@ -29,7 +29,7 @@ Then got to [http://localhost:8080/run](http://localhost:8080/run)
 
 You can then use a (real) spark cluster by giving the spark master url
 (as written in the spark master web ui page!) as a a parameter.
-Ex: [http://localhost:8080/run?master?spark://serverName:7077](http://localhost:8080/run?spark://serverName:7077)
+Ex: [http://localhost:8080/run?master=spark://serverName:7077](http://localhost:8080/run?master=spark://serverName:7077)
 
 
 ###Note on spark dependencies

@@ -1,6 +1,6 @@
 A very simple spring web app that use apache spark hive
 
-**Note:** Currently, it is only tested/implemented/working on local disc and spark 'local'.
+**Note:** Currently, it is only tested/implemented/working on local disc.
 
 Author [Julien Diener](http://julien.diener.website)
 
@@ -11,13 +11,26 @@ See the command in the *Note on spark dependencies* section below.
 
 **package and install**:
 
-`mvn install`
+    mvn install
 
 **run using jetty plugin**:
 
-`mvn jetty:run`
+    cd webapp
+    mvn jetty:run
+
+To run the code on local hard disc (no hdfs), the folder `/user/hive/warehouse` should be created:
+
+    sudo mkdir -P /user/hive/warehouse
+    sudo chown $USER /user/hive/warehouse
+
 
 Then got to [http://localhost:8080/run](http://localhost:8080/run)
+(it will create a folder `myTable` in `/user/hive/warehouse`)
+
+You can then use a (real) spark cluster by giving the spark master url
+(as written in the spark master web ui page!) as a a parameter.
+Ex: [http://localhost:8080/run?master?spark://serverName:7077](http://localhost:8080/run?spark://serverName:7077)
+
 
 ###Note on spark dependencies
 

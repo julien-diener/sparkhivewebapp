@@ -2,3 +2,5 @@
 sparkwebapp.iml
 target/
 sparkhivewebapp.iml
+derby.log
+metastore_db/

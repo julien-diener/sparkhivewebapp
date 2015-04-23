@@ -71,45 +71,5 @@ public class MyTable {
     public List<MyData> request(){
         JavaSchemaRDD myDataRdd = sparkHiveContext.sql("SELECT * FROM myTable");
         return myDataRdd.map(MyData.parseRow).collect();
-        /*
-        // delete output directory
-        // -----------------------
-        try {
-            if (namenode != null) {
-                Configuration conf = new Configuration();
-                conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
-                conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
-                FileSystem hdfs = FileSystem.get(URI.create(namenode), conf);
-
-                hdfs.delete(new Path(outputDir), true);   // true => recursive
-            } else {
-                FileUtil.fullyDelete(new File(outputDir));
-            }
-        }catch (IOException e){
-            System.out.println("\n*** could not delete output directory: "+outputDir);
-            System.out.println(e.getMessage());
-        }
-
-        // file conversion with spark
-        // --------------------------
-        if(namenode!=null){
-            inputFile = namenode+inputFile;
-            outputDir = namenode+outputDir;
-        }
-        JavaRDD<String> inputRdd = sparkContext.textFile(inputFile).cache();
-        //   for Java 8:
-        //   JavaRDD<String> outputRdd = inputRdd.map(Converter::convertLine);
-
-        //   for Java 7:
-        Function fct = new Function<String,String>() {
-            @Override
-            public String call(String line) throws Exception {
-                return line.toUpperCase();
-            }
-        };
-        JavaRDD<String> outputRdd = inputRdd.map(fct);
-
-        outputRdd.saveAsTextFile(outputDir);
-        */
     }
 }

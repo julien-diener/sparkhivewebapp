@@ -1,11 +1,14 @@
 A very simple spring web app that use apache spark hive
 
-**NOT WORKING**
+**Note:** Currently, it is only tested/implemented/working on local disc and spark 'local'.
 
 Author [Julien Diener](http://julien.diener.website)
 
 Note about spark dependencies
 -----------------------------
+
+**Spark assembly**
+
 The maven spark dependencies are not usable at run time (well I did not manage to). The solution is to use the spark
 assembly jar provided by the spark installation, as it is the actual jar dep that is required to run stand alone app.
 
@@ -24,3 +27,7 @@ a dependency which needs to be added to the maven local repo with:
 
 See this [SO question](http://stackoverflow.com/q/28860270/1206998) for more details.
 
+**datanucleus**
+
+To run hive, the datanuleus core (3.3.2), api-jdo (3.2.1) and rdbms (3.2.1) are added as maven dependencies.
+The version were chosen to match those included in `$SPARK_HOME/lib`.

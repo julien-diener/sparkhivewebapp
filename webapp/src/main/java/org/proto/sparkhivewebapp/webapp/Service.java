@@ -1,5 +1,6 @@
-package org.proto.sparkhivewebapp;
+package org.proto.sparkhivewebapp.webapp;
 
+import org.proto.sparkhivewebapp.shared.MyData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

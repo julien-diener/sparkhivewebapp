@@ -1,4 +1,4 @@
-package org.proto.sparkhivewebapp;
+package org.proto.sparkhivewebapp.shared;
 
 import org.apache.spark.api.java.function.Function;
 import org.apache.spark.sql.api.java.Row;

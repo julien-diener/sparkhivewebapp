@@ -1,13 +1,11 @@
-package org.proto.sparkhivewebapp;
+package org.proto.sparkhivewebapp.webapp;
 
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.api.java.function.Function;
-import org.apache.spark.sql.SchemaRDD;
 import org.apache.spark.sql.api.java.JavaSchemaRDD;
-import org.apache.spark.sql.api.java.Row;
 import org.apache.spark.sql.hive.api.java.JavaHiveContext;
+import org.proto.sparkhivewebapp.shared.MyData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +34,7 @@ public class MyTable {
             master = newMaster;
             SparkConf conf = new SparkConf().setAppName("Spark hive prototype").setMaster(master);
             conf.setJars(JavaSparkContext.jarOfClass(MyTable.class));
+            conf.setJars(JavaSparkContext.jarOfClass(MyData.class));
 
             sparkContext = new JavaSparkContext(conf);
         }
@@ -56,8 +55,8 @@ public class MyTable {
         JavaSchemaRDD schemaRDD = sparkHiveContext.applySchema(myRdd, MyData.class);
         schemaRDD.registerTempTable("myTableTemplate");
 
-        //sparkHiveContext.sql("CREATE TABLE IF NOT EXISTS mytable (name String, value INT)");
-        //sparkHiveContext.sql("INSERT INTO TABLE mytable SELECT * FROM myTableTemplate");
+        //sparkHiveContext.sql("CREATE TABLE IF NOT EXISTS myTable (name String, value INT)");
+        //sparkHiveContext.sql("INSERT INTO TABLE myTable SELECT * FROM myTableTemplate");
 
         sparkHiveContext.sql("DROP TABLE myTable");
         sparkHiveContext.sql("CREATE TABLE myTable AS SELECT * FROM myTableTemplate");

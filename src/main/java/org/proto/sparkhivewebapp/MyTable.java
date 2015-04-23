@@ -47,11 +47,6 @@ public class MyTable {
         namenode = newNamenode;
     }
 
-    public void generateTable(int n) {
-        sparkHiveContext.sql("CREATE TABLE IF NOT EXISTS mytable (name String, value INT)");
-        for(int i=0; i<n; i++)
-            sparkHiveContext.sql("INSERT INTO mytable SELECT '1', 1");
-    }
     public void generateTableUsingRDD(int n) {
         ArrayList<MyData> data = new ArrayList<>(n);
         for(int i=0; i<n; i++)

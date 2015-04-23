@@ -20,16 +20,16 @@ To run the code on local hard disc (no hdfs), the folder `/user/hive/warehouse` 
     sudo mkdir -P /user/hive/warehouse
     sudo chown $USER /user/hive/warehouse
 
-The start jetty
+Then start jetty
 
     cd webapp
     mvn jetty:run
 
-And got to [http://localhost:8080/run](http://localhost:8080/run)
+And go to [http://localhost:8080/run](http://localhost:8080/run)
 (it will create a folder `mytable` in `/user/hive/warehouse`)
 
-You can then use a (real) spark cluster by giving the spark master url
-(as written in the spark master web ui page!) as a a parameter.
+To use a (real) spark cluster, the spark master url
+(as written in the spark master web ui page!) should be given as the `master` parameter .
 Ex: [http://localhost:8080/run?master=spark://serverName:7077](http://localhost:8080/run?master=spark://serverName:7077)
 
 

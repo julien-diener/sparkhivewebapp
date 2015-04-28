@@ -1,6 +1,6 @@
 A very simple spring web app that use apache spark hive
 
-**Note:** Currently, it is only tested/implemented/working on local disc.
+**Note:** Currently, it is only implemented to work on local disc.
 
 Author [Julien Diener](http://julien.diener.website)
 
@@ -25,12 +25,26 @@ Then start jetty
     cd webapp
     mvn jetty:run
 
-And go to [http://localhost:8080/run](http://localhost:8080/run)
-(it will create a folder `mytable` in `/user/hive/warehouse`)
+And go to [http://localhost:8080/gen](http://localhost:8080/gen), it will create a default table `mytable`
+(and a folder in `/user/hive/warehouse`).
 
-To use a (real) spark cluster, the spark master url
-(as written in the spark master web ui page!) should be given as the `master` parameter .
-Ex: [http://localhost:8080/run?master=spark://serverName:7077](http://localhost:8080/run?master=spark://serverName:7077)
+####Implemented services
+
+This spring package implements 2 web services:
+
+  - **gen** that generate (possibly override) a table and return the created data as json.
+    The (optional) parameters are `name` the name of the table (default "mytable"),
+    `n` the number of row to add to the table, `namenode` the hdfs namenode to use (default is "file:///")
+    and `master` the spark master to use (default "local")
+
+  - **request** that return a tab le content as json. The (optional) parameter is `name` the name of the table
+    to request content from. Note that the master is always local (I just did not implement the option) and
+    the namenode is the one used to create the requested table.
+
+**Note about spark master**:
+
+To use a (real) spark cluster, the spark master url should be given (using the `master` parameter) as it is
+written in the spark master web ui page!
 
 
 ###Note on spark dependencies

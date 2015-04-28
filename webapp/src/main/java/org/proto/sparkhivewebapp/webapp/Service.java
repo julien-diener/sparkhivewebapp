@@ -17,14 +17,25 @@ import java.util.List;
 @RequestMapping
 public class Service {
 
-    @RequestMapping(method = RequestMethod.GET, value="/run", produces = "application/json; charset=utf-8")
-    public @ResponseBody String run(@RequestParam(required = false) String master,
-                                     @RequestParam(required = false) String namenode) {
+    @RequestMapping(method = RequestMethod.GET, value="/gen", produces = "application/json; charset=utf-8")
+    public @ResponseBody String generate(@RequestParam(required = false) String master,
+                                    @RequestParam(required = false) String namenode,
+                                    @RequestParam(required = false, defaultValue = "mytable") String name,
+                                    @RequestParam(required = false, defaultValue = "5") int n) {
         MyTable.initSpark(master, namenode);
-        MyTable table = new MyTable();
+        MyTable table = new MyTable(name);
+        table.generateTableUsingRDD(n);
 
-        List<MyData> myData = table.request();
+        return request2jsonString(table.request());
+    }
 
+
+    @RequestMapping(method = RequestMethod.GET, value="/request", produces = "application/json; charset=utf-8")
+    public @ResponseBody String request(@RequestParam(required = false, defaultValue = "mytable") String name) {
+        return request2jsonString(new MyTable(name).request());
+    }
+
+    private String request2jsonString(List<MyData> myData){
         String output = "[";
         for(MyData data : myData)
             output += "{\"name\": \"" + data.getName()+ "\", \"value\":"+data.getValue()+"},\n";
@@ -32,4 +43,5 @@ public class Service {
 
         return output;
     }
+
 }

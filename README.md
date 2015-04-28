@@ -41,10 +41,9 @@ This spring package implements 2 web services:
     to request content from. Note that the master is always local (I just did not implement the option) and
     the namenode is the one used to create the requested table.
 
-**Note about spark master**:
-
+**Spark master**:
 To use a (real) spark cluster, the spark master url should be given (using the `master` parameter) as it is
-written in the spark master web ui page!
+written in the *spark master web ui page*.
 
 
 ###Note on spark dependencies

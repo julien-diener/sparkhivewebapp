@@ -1,19 +1,17 @@
 A very simple spring web app that use apache spark hive
 
-**Note:** Currently, it is only implemented to work on local disc.
-
 Author [Julien Diener](http://julien.diener.website)
 
 ###Getting started
 
-First, the spark assembly jar (provided in the installation spark lib folder) should be added to maven local repo.
-See the command in the *Note on spark dependencies* section below.
+First, the spark assembly jar (provided in the installation spark lib folder) should be added
+to the maven local repo. The command is given in the *Note on spark dependencies* section below.
 
-**package and install**:
+**packaging and install**:
 
     mvn install
 
-**run using jetty plugin**:
+**run using the jetty plugin**:
 
 To run the code on local hard disc (no hdfs), the folder `/user/hive/warehouse` should be created:
 
@@ -32,19 +30,34 @@ And go to [http://localhost:8080/gen](http://localhost:8080/gen), it will create
 
 This spring package implements 2 web services:
 
-  - **gen** that generate (possibly override) a table and return the created data as json.
-    The (optional) parameters are `name` the name of the table (default "mytable"),
-    `n` the number of row to add to the table, `namenode` the hdfs namenode to use (default is "file:///")
+  - **gen** that generates (overriding if necessary) a table and return the created data as json.
+    The (optional) parameters are: `name` the name of the table (default "mytable"),
+    `n` the number of rows to add to the table, `namenode` the hdfs namenode to use (default is "file:///")
     and `master` the spark master to use (default "local")
 
-  - **request** that return a tab le content as json. The (optional) parameter is `name` the name of the table
-    to request content from. Note that the master is always local (I just did not implement the option) and
-    the namenode is the one used to create the requested table.
+  - **request** that returns a table content as json. The (optional) parameter is `name`: the name of the table
+    to request content from. Note that the master is always local (I just did not implement the option).
+    As well, I did not implement a namenode parameter, thus the last that has been used with gen is kept.
+    However, the table is looked for on the hadoop or local file system is has been written to. So, the request
+    can only work on table of the file system used last (with gen).
 
 **Spark master**:
 To use a (real) spark cluster, the spark master url should be given (using the `master` parameter) as it is
 written in the *spark master web ui page*.
 
+####Hive
+
+This web app works with spark-hive, without a hive server. It is uses the hadoop hive dependencies which
+(to my understanding) contains a, probably simple, hive server. Hive create a `metastore_db` folder in the
+running folder ,as well as a `derby.log` file. Then tables are stored in `/user/hive/metastore` folder of
+either the local file system or on the hdfs given by the namenode parameter.
+
+These folders should thus exist and have suitable writing permissions.
+
+####Unexplained bug
+
+I found that *sometimes* request on hdfs fails, but not often. Re-running the request, or refreshing the page on
+the browser however works. It looks to be some kind of instability in the communication with hdfs...
 
 ###Note on spark dependencies
 
